@@ -64,7 +64,7 @@ extern abstract Defines(Int) to Int {
 }
 
 
-@:native("::::cpp::Struct<::MDB_cursor_op, ::cpp::EnumHandler>")
+@:native("::::cpp::Struct< ::MDB_cursor_op, ::cpp::EnumHandler>")
 extern class MDBCursorOpImpl {
 }
 
