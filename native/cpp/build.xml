@@ -1,0 +1,16 @@
+<xml>
+    <files id="haxe">
+        <compilerflag value="-I${this_dir}/../../lib/lmdb/libraries/liblmdb"/>
+        <compilerflag value="-I${this_dir}"/>
+        <file name="${this_dir}/lmdbwrapper.cpp"/>
+    </files>
+    <files id="lmdb">
+        <depend name="${this_dir}/../../lib/lmdb/libraries/liblmdb/lmdb.h"/>
+        <file name="${this_dir}/../../lib/lmdb/libraries/liblmdb/mdb.c"/>
+        <file name="${this_dir}/../../lib/lmdb/libraries/liblmdb/midl.c"/>
+    </files>
+    <target id="haxe">
+        <files id="lmdb"/>
+    </target>
+    <echo value="build.xml: ${this_dir}"/>
+</xml>
