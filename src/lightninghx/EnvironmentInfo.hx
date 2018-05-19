@@ -10,9 +10,9 @@ package lightninghx;
     * numReaders: Max reader slots used in the environment.
 **/
 typedef EnvironmentInfo = {
-    mapSize:Int,
-    lastPageNumber:Int,
-    lastTransactionID:Int,
+    mapSize:#if int32_size Int #else haxe.Int64 #end,
+    lastPageNumber:#if int32_size Int #else haxe.Int64 #end,
+    lastTransactionID:#if int32_size Int #else haxe.Int64 #end,
     maxReaders:Int,
     numReaders:Int
 };

@@ -1,5 +1,6 @@
 package lightninghx.tests;
 
+import haxe.Int64;
 import lightninghx.testutil.TempDir;
 import sys.FileSystem;
 import utest.Assert;
@@ -91,8 +92,16 @@ class TestEnvironment {
         var env = Lightning.environment();
         env.open(dir.dirPath);
 
-        env.setMapSize(256);
-        Assert.equals(0, env.readerCheck());
+        #if int32_size
+        var mapSize = 2147483647;
+        #else
+        var mapSize = Int64.parseString("1099511627776");
+        #end
+
+        env.setMapSize(mapSize);
+        var info = env.info();
+        Assert.equals(mapSize, info.mapSize);
+        trace(info);
 
         env.close();
         dir.close();

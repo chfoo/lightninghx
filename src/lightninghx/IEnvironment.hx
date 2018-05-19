@@ -95,7 +95,7 @@ interface IEnvironment {
 
         @param size Size in bytes.
     **/
-    function setMapSize(size:#if x32 Int #else haxe.Int64 #end):Void;
+    function setMapSize(size:#if int32_size Int #else haxe.Int64 #end):Void;
 
     /**
         Set the maximum number of read transactions.

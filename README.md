@@ -14,6 +14,12 @@ Getting Started
 TODO
 
 
+Compiler flags
+--------------
+
+By default, `Int64` is used for the map size type. This may overflow the native `size_t` parameter. You can force this library to use `Int` by specifying the `-D int32_size` flags.
+
+
 Developing
 ----------
 
@@ -28,3 +34,4 @@ To run the tests:
         haxelib install hxcpp
         haxelib install test.hxml
         haxe text.hxml
+        ./out/cpp/TestAll-debug

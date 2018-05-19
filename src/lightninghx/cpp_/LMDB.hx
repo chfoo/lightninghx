@@ -28,20 +28,20 @@ package lightninghx.cpp_;
     var ms_psize:Int;
     var ms_depth:Int;
     var ms_branch_pages:Int;
-	var ms_leaf_pages:Int;
-	var ms_overflow_pages:Int;
-	var ms_entries:Int;
+    var ms_leaf_pages:Int;
+    var ms_overflow_pages:Int;
+    var ms_entries:Int;
 }
 
 
 @:structAccess @:include("lmdb.h")
 @:native("MDB_envinfo") extern class MDB_envinfo {
     var me_mapaddr:Dynamic;
-	var me_mapsize:Int;
-	var me_last_pgno:Int;
-	var me_last_txnid:Int;
-	var me_maxreaders:Int;
-	var me_numreaders:Int;
+    var me_mapsize:#if int32_size Int #else haxe.Int64 #end;
+    var me_last_pgno:#if int32_size Int #else haxe.Int64 #end;
+    var me_last_txnid:#if int32_size Int #else haxe.Int64 #end;
+    var me_maxreaders:Int;
+    var me_numreaders:Int;
 }
 
 
@@ -99,7 +99,7 @@ extern class LMDB {
     static function envGetPath(env:Environment):String;
 
     @:native("lmdbwrapper::env_set_mapsize")
-    static function envSetMapSize(env:Environment, size:#if x32 Int #else haxe.Int64 #end):Void;
+    static function envSetMapSize(env:Environment, size:#if int32_size Int #else haxe.Int64 #end):Void;
 
     @:native("lmdbwrapper::env_set_maxreaders")
     static function envSetMaxReaders(env:Environment, readers:Int):Void;

@@ -94,7 +94,7 @@ class Environment implements IEnvironment {
         return LMDB.envGetPath.bind(env).withErrorHandler();
     }
 
-    public function setMapSize(size:#if x32 Int #else haxe.Int64 #end) {
+    public function setMapSize(size:#if int32_size Int #else haxe.Int64 #end) {
         LMDB.envSetMapSize.bind(env, size).withErrorHandler();
     }
 
