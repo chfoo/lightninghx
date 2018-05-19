@@ -31,7 +31,6 @@ Running tests
 
 To run the tests:
 
-        haxelib install hxcpp
         haxelib install test.hxml
         haxe text.hxml
         ./out/cpp/TestAll-debug

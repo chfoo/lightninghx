@@ -9,6 +9,5 @@
     "releasenote": "Initial release",
     "contributors": ["chfoo"],
     "dependencies": {
-      "hxcpp": ""
     }
   }

@@ -1,0 +1,11 @@
+language: haxe
+
+haxe:
+  - stable
+
+install:
+  yes | haxelib install test.hxml
+
+script:
+  haxe test.hxml
+  ./out/cpp/TestAll-debug
