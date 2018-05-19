@@ -33,14 +33,9 @@ class ImplTools {
 
     public static function getBytes(mdbVal:LMDB.MDBValue):Bytes {
         var length = mdbVal.value.mv_size;
-        var bytes = Bytes.alloc(length);
-
         var dataPointer:cpp.Pointer<cpp.Void> = cpp.Pointer.fromRaw(mdbVal.value.mv_data);
         var arrayPointer:cpp.Pointer<cpp.UInt8> = dataPointer.reinterpret();
-
-        for (index in 0...length) {
-            bytes.set(index, arrayPointer.at(index));
-        }
+        var bytes = Bytes.ofData(arrayPointer.toUnmanagedArray(length));
 
         return bytes;
     }
