@@ -3,9 +3,13 @@ lightninghx
 
 LightningHx is a native extern binding and wrapper library of Lightning Memory-Mapped Database (LMDB) for Haxe.
 
-The library currently supports LMDB 0.9.22 and the CPP target. All methods, except for methods involving file descriptors and function pointers, are implemented.
+For an introduction to LMDB, please [see this document](https://github.com/LMDB/lmdb/blob/LMDB_0.9.22/libraries/liblmdb/intro.doc).
 
-Note: It is possible to segfault the program or corrupt your database if calls are done with invalid state. For an introduction to LMDB, please [see this document](https://github.com/LMDB/lmdb/blob/LMDB_0.9.22/libraries/liblmdb/lmdb.h). Since it is possible that the binding may have bugs across hxcpp versions, compilers, or platforms, please check and test that calls and flags are working as intended before using the binding in production.
+The library currently supports LMDB 0.9.22 and the CPP target. All [methods](https://github.com/LMDB/lmdb/blob/LMDB_0.9.22/libraries/liblmdb/lmdb.h), except for methods involving file descriptors and function pointers, are implemented.
+
+Note: It is possible to segfault the program or corrupt your database if calls are done with invalid state. However by default, this library will track additional state to prevent them from happening. Safety checking can be disabled if needed.
+
+Note: Since it is possible that the binding may have bugs across hxcpp versions, compilers, or platforms, please check and test that calls and flags are working as intended before using the binding in production.
 
 
 Getting Started
