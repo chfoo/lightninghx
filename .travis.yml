@@ -7,5 +7,5 @@ install:
   yes | haxelib install test.hxml
 
 script:
-  haxe test.hxml
-  ./out/cpp/TestAll-debug
+  - haxe test.hxml
+  - ./out/cpp/TestAll-debug
