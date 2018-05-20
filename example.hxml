@@ -1,0 +1,12 @@
+-cp example/
+-cp src/
+
+--each
+
+-cpp out/cpp-FruitExample/
+-main example.FruitExample
+
+--next
+
+-cpp out/cpp-DupFruitExample/
+-main example.DupFruitExample

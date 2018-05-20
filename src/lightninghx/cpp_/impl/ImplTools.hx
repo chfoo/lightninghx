@@ -33,6 +33,13 @@ class ImplTools {
 
     public static function getBytes(mdbVal:LMDB.MDBValue):Bytes {
         var length = mdbVal.value.mv_size;
+
+        #if debug
+        if (length < 0) {
+            throw new Exception.InvalidStateException("Unexpected negative length");
+        }
+        #end
+
         var dataPointer:cpp.Pointer<cpp.Void> = cpp.Pointer.fromRaw(mdbVal.value.mv_data);
         var arrayPointer:cpp.Pointer<cpp.UInt8> = dataPointer.reinterpret();
         var bytes = Bytes.ofData(arrayPointer.toUnmanagedArray(length));
