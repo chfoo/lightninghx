@@ -56,8 +56,12 @@ typedef EnvInfo = cpp.Pointer<MDB_envinfo>;
 
 @:keep
 @:include("lmdbwrapper.h")
+#if lhx_use_local_build_xml
 @:buildXml("<include name='${this_dir}/../../native/cpp/build.xml'/>")
 // this_dir is "out/cpp/"
+#else
+@:buildXml("<include name='${haxelib:lightninghx}/../native/cpp/build.xml'/>")
+#end
 extern class LMDB {
     @:native("lmdbwrapper::version")
     static function version(error:Int):String;

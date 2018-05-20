@@ -25,7 +25,7 @@ Install the library using:
 
         haxelib install lightninghx
 
-Alternatively, you may download it manually using git. Be sure to initialize the submodules.
+Alternatively, you may download it manually using git. Be sure to initialize the submodules. Then install it so that the build process knows where the sources are: `haxelib dev lightninghx [directory path name]`.
 
 
 ### Fruit database example

@@ -3,4 +3,5 @@
 -cpp out/cpp/
 -lib utest
 -debug
+-D lhx_use_local_build_xml
 -main lightninghx.TestAll
