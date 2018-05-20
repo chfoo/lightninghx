@@ -54,7 +54,7 @@ class Database implements IDatabase {
         LMDB.drop.bind(txn, dbi, delete ? 1 : 0).withErrorHandler();
     }
 
-    public function get(key:Bytes):Bytes {
+    public function get(key:Bytes):ReadOnlyBytes {
         var keyMDBValue = LMDB.newMDBValue();
         keyMDBValue.setBytes(key);
 
@@ -72,7 +72,7 @@ class Database implements IDatabase {
         keyMDBValue.destroy();
         dataMDBValue.destroy();
 
-        return dataBytes;
+        return new ReadOnlyBytes(dataBytes);
     }
 
     public function put(key:Bytes, data:Bytes, ?flags:Flags<WriteFlags>) {

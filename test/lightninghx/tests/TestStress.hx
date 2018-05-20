@@ -110,7 +110,7 @@ private class Session {
         for (dummy in 0...amount) {
             var pair = derivePair(seed);
             seed = deriveSeed(seed);
-            var data = database.get(pair.key);
+            var data = database.get(pair.key).toBytes();
             pairs.push({ key: pair.key, data: data });
         }
 

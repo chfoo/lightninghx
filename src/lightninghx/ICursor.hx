@@ -4,8 +4,8 @@ import haxe.io.Bytes;
 
 
 typedef KeyDataPair = {
-    key:Bytes,
-    data:Bytes
+    key:ReadOnlyBytes,
+    data:ReadOnlyBytes
 }
 
 /**
@@ -52,6 +52,9 @@ interface ICursor {
 
     /**
         Get key-data pair from the database.
+
+        The returned key and data is a reference to the memory map and
+        must not be modified.
 
         @param operation Where and how to position the cursor.
         @param key Key to search depending on operation.

@@ -71,15 +71,11 @@ class Database implements IDatabase {
         innerDatabase.drop(delete);
     }
 
-    public function get(key:Bytes):Bytes {
+    public function get(key:Bytes):ReadOnlyBytes {
         requireEnvironmentAndTransaction();
         resourceState.requireState(Opened);
 
-        var data = innerDatabase.get(key);
-        var copy = Bytes.alloc(data.length);
-        copy.blit(0, data, 0, data.length);
-
-        return copy;
+        return innerDatabase.get(key);
     }
 
     public function put(key:Bytes, data:Bytes, ?flags:Flags<WriteFlags>) {

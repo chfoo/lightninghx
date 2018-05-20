@@ -66,8 +66,8 @@ class Cursor implements ICursor {
         dataMDBValue.destroy();
 
         return {
-            key: keyBytes,
-            data: dataBytes
+            key: new ReadOnlyBytes(keyBytes),
+            data: new ReadOnlyBytes(dataBytes)
         };
     }
 

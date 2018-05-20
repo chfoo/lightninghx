@@ -64,11 +64,12 @@ interface IDatabase {
     /**
         Return data for the given key.
 
-        The data returned is raw and must not be modified.
+        The data returned is a reference to the memory map and must not
+        be modified.
 
         @param key Key used to search.
     **/
-    function get(key:Bytes):Bytes;
+    function get(key:Bytes):ReadOnlyBytes;
 
     /**
         Store the key-data pair.
