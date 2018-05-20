@@ -13,7 +13,7 @@ Usage Notes
 
 It is possible to segfault the program or corrupt your database if calls are done with invalid state. However by default, this library will track additional state to prevent them from happening. Safety checking can be disabled if needed.
 
-The largest value of `Int` is 2147483647. The largest value of `Int64` that is safe across all targets is 9007199254740991. The consequence is that data items must not exceed 2147483647 bytes. If using 32 bit operation, the map size must not exceed 2147483647 bytes as well.
+The largest value of `Int` is 2147483647. The largest value of `Int64` that is safe across all targets is 9007199254740991. The consequence is that data items must not exceed 2147483647 bytes. If using the compile flag to use `Int` for the map size, it must not exceed 2147483647 bytes as well.
 
 Since it is possible that the binding may have bugs across hxcpp versions, compilers, or platforms, please check and test that calls and flags are working as intended before using the binding in production.
 

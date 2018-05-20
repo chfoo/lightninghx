@@ -121,6 +121,10 @@ class Environment implements IEnvironment {
     }
 
     public function setMapSize(size:#if int32_size Int #else haxe.Int64 #end) {
+        if (size < 0) {
+            throw new Exception.InvalidStateException("Map size is negative");
+        }
+
         resourceState.disallowState(Closed);
         innerEnvironment.setMapSize(size);
     }
