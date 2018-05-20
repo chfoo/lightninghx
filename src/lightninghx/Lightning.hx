@@ -11,12 +11,16 @@ class Lightning {
         Return a new environment.
     **/
     public static function environment(safety:Bool = true):IEnvironment {
-        var envImpl;
+        var envImpl:IEnvironment = null;
         #if cpp
         envImpl = lightninghx.cpp_.impl.Environment.create();
-        #else
-        #error "Not supported on this target";
+        #elseif !(dont_compile_time_error)
+        #error
         #end
+
+        if (envImpl == null) {
+            throw "Not implemented for current platform";
+        }
 
         if (safety) {
             return new lightninghx.safety.Environment(envImpl);
