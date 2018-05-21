@@ -4,7 +4,7 @@
     "license": "MIT",
     "tags": ["extern", "native", "cpp"],
     "description": "Native extern binding and wrapper library of LMDB.",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "classPath": "src/",
     "releasenote": "Initial release",
     "contributors": ["chfoo"],
