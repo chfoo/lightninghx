@@ -13,7 +13,7 @@ Usage Notes
 
 It is possible to segfault the program or corrupt your database if calls are done with invalid state. However by default, this library will track additional state to prevent them from happening. Safety checking can be disabled if needed.
 
-The largest value of `Int` is 2147483647. The largest value of `Int64` that is safe across all targets is 9007199254740991. The consequence is that data items must not exceed 2147483647 bytes. If using the compile flag to use `Int` for the map size, it must not exceed 2147483647 bytes as well.
+The largest value of `Int` is 2147483647. The consequence is that data items must not exceed 2147483647 bytes. If using the compile flag to use `Int` for the map size, it must not exceed 2147483647 bytes as well.
 
 Since it is possible that the binding may have bugs across hxcpp versions, compilers, or platforms, please check and test that calls and flags are working as intended before using the binding in production.
 
@@ -34,8 +34,11 @@ In the following example, we will be storing names of fruits to colors of fruits
 
 ```haxe
 var environment = Lightning.environment();
+environment.setMapSize(2147483647);
 environment.open("example_fruit_db/");
 ```
+
+In above, we set the memory map size to be 2 GB. This value is the maximum size of the database.
 
 Then, start a transaction and get the database which we'll be using:
 
@@ -102,6 +105,7 @@ First, open the environment:
 
 ```haxe
 var environment = Lightning.environment();
+environment.setMapSize(2147483647);
 environment.open("example_dup_fruit_db/");
 ```
 

@@ -88,10 +88,13 @@ interface IEnvironment {
     /**
         Set the maximum size of the database.
 
-        This value is small by default and will throw exceptions if the
+        This value is 10 MB by default and will throw exceptions if the
         database grows beyond that. The size should be very large and should
-        be a multiple of the OS page size. This value is not saved and should
-        be set whenever the environment is opened.
+        be a multiple of the OS page size. This value is persisted after the
+        first write transaction.
+
+        For details, please see the C documentation for
+        the `mdb_env_set_mapsize()` function.
 
         @param size Size in bytes.
     **/

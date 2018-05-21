@@ -11,6 +11,7 @@ import lightninghx.Lightning;
 class DupFruitExample {
     public static function main() {
         var environment = Lightning.environment();
+        environment.setMapSize(2147483647);
         environment.open("example_dup_fruit_db/");
 
         var transaction = environment.beginTransaction();
