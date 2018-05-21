@@ -1,18 +1,18 @@
 package lightninghx.cpp_.impl;
 
 import haxe.io.Bytes;
-import lightninghx.ICursor.KeyDataPair;
+import lightninghx.Cursor.KeyDataPair;
 
 using lightninghx.cpp_.impl.ImplTools;
 
 
-class Cursor implements ICursor {
+class CPPCursor implements Cursor {
     var env:LMDB.Environment;
     var txn:LMDB.Transaction;
     var dbi:LMDB.Database;
     var cursor:LMDB.Cursor;
 
-    @:allow(lightninghx.cpp_.impl.Database)
+    @:allow(lightninghx.cpp_.impl.CPPDatabase)
     function new(env:LMDB.Environment, txn:LMDB.Transaction, dbi:LMDB.Database,
             cursor:LMDB.Cursor) {
         this.env = env;
@@ -25,18 +25,18 @@ class Cursor implements ICursor {
         LMDB.cursorClose(cursor);
     }
 
-    public function renew(transaction:ITransaction) {
-        var transactionImpl = cast(transaction, Transaction);
+    public function renew(transaction:Transaction) {
+        var transactionImpl = cast(transaction, CPPTransaction);
         txn = transactionImpl.txn;
         LMDB.cursorRenew.bind(txn, cursor).withErrorHandler();
     }
 
-    public function getTransaction():ITransaction {
-        return new Transaction(env, txn);
+    public function getTransaction():Transaction {
+        return new CPPTransaction(env, txn);
     }
 
-    public function getDatabase():IDatabase {
-        return new Database(env, txn, dbi);
+    public function getDatabase():Database {
+        return new CPPDatabase(env, txn, dbi);
     }
 
     public function get(operation:CursorOperation, ?key:Bytes, ?data:Bytes):KeyDataPair {

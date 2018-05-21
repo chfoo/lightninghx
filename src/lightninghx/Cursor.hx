@@ -21,7 +21,7 @@ typedef KeyDataPair = {
     `close()` must be called to release resources held by this instance.
     A cursor will automatically be closed in a write transaction.
 **/
-interface ICursor {
+interface Cursor {
     /**
         Release resources held by this instance.
 
@@ -38,17 +38,17 @@ interface ICursor {
 
         @param transaction Read-only transaction.
     **/
-    function renew(transaction:ITransaction):Void;
+    function renew(transaction:Transaction):Void;
 
     /**
         Return the associated transaction.
     **/
-    function getTransaction():ITransaction;
+    function getTransaction():Transaction;
 
     /**
         Return the associated database.
     **/
-    function getDatabase():IDatabase;
+    function getDatabase():Database;
 
     /**
         Get key-data pair from the database.

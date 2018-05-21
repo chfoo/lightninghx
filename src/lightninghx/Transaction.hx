@@ -17,11 +17,11 @@ package lightninghx;
     To release resources held by this instance, one of `commit()`, `abort()`,
     or `reset()` must be called.
 **/
-interface ITransaction {
+interface Transaction {
     /**
         Return the associated environment.
     **/
-    function getEnvironment():IEnvironment;
+    function getEnvironment():Environment;
 
     /**
         Return an associated identifier.
@@ -67,17 +67,17 @@ interface ITransaction {
 
         Generally, databases are opened once in the first transaction and the
         databases are reused subsequent transactions. To make use of this
-        pattern, see `IDatabase`.
+        pattern, see `Database`.
 
         @param name Name of the database if a named database is required.
         @param flags Database options.
     **/
-    function openDatabase(?name:String, ?flags:Flags<DatabaseFlags>):IDatabase;
+    function openDatabase(?name:String, ?flags:Flags<DatabaseFlags>):Database;
 
     /**
         Start a nested transaction.
 
         This instance may not be used until the nested transaction is closed.
     **/
-    function beginTransaction(?flags:Flags<EnvironmentFlags>):ITransaction;
+    function beginTransaction(?flags:Flags<EnvironmentFlags>):Transaction;
 }

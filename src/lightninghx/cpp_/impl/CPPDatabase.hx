@@ -5,22 +5,22 @@ import haxe.io.Bytes;
 using lightninghx.cpp_.impl.ImplTools;
 
 
-class Database implements IDatabase {
+class CPPDatabase implements Database {
     var env:LMDB.Environment;
     var txn:LMDB.Transaction;
     var dbi:LMDB.Database;
 
-    @:allow(lightninghx.cpp_.impl.Transaction)
-    @:allow(lightninghx.cpp_.impl.Cursor)
+    @:allow(lightninghx.cpp_.impl.CPPTransaction)
+    @:allow(lightninghx.cpp_.impl.CPPCursor)
     function new(env:LMDB.Environment, txn:LMDB.Transaction, dbi:LMDB.Database) {
         this.env = env;
         this.txn = txn;
         this.dbi = dbi;
     }
 
-    public function reuse(transaction:ITransaction):IDatabase {
-        var transactionImpl = cast(transaction, Transaction);
-        return new Database(env, transactionImpl.txn, dbi);
+    public function reuse(transaction:Transaction):Database {
+        var transactionImpl = cast(transaction, CPPTransaction);
+        return new CPPDatabase(env, transactionImpl.txn, dbi);
     }
 
     public function stat():Statistics {
@@ -118,10 +118,10 @@ class Database implements IDatabase {
         dataMDBValue.destroy();
     }
 
-    public function openCursor():ICursor {
+    public function openCursor():Cursor {
         var mdbCursor = LMDB.cursorOpen(txn, dbi);
 
-        return new Cursor(env, txn, dbi, mdbCursor);
+        return new CPPCursor(env, txn, dbi, mdbCursor);
     }
 
     public function compareKey(keyA:Bytes, keyB:Bytes):Int {

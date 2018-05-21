@@ -66,10 +66,10 @@ private typedef Pair = {
 };
 
 private class Session {
-    var environment:IEnvironment;
-    var database:IDatabase;
+    var environment:Environment;
+    var database:Database;
 
-    public function new(environment:IEnvironment) {
+    public function new(environment:Environment) {
         this.environment = environment;
 
         var transaction = environment.beginTransaction();

@@ -3,16 +3,16 @@ package lightninghx.cpp_.impl;
 using lightninghx.cpp_.impl.ImplTools;
 
 
-class Environment implements IEnvironment {
+class CPPEnvironment implements Environment {
     var env:LMDB.Environment;
 
-    @:allow(lightninghx.cpp_.impl.Transaction)
+    @:allow(lightninghx.cpp_.impl.CPPTransaction)
     function new(env:LMDB.Environment) {
         this.env = env;
     }
 
     public static function create() {
-        return new Environment(LMDB.envCreate.bind().withErrorHandler());
+        return new CPPEnvironment(LMDB.envCreate.bind().withErrorHandler());
     }
 
     public function open(path:String, ?flags:Flags<EnvironmentFlags>, ?unixMode:Int) {
@@ -114,11 +114,11 @@ class Environment implements IEnvironment {
         return LMDB.envGetMaxKeySize(env);
     }
 
-    public function beginTransaction(?flags:Flags<EnvironmentFlags>):ITransaction {
+    public function beginTransaction(?flags:Flags<EnvironmentFlags>):Transaction {
         flags = flags != null ? flags : new Flags<EnvironmentFlags>();
         var mdbTxn = LMDB.txnBegin.bind(env, null, flags).withErrorHandler();
 
-        return new Transaction(env, mdbTxn);
+        return new CPPTransaction(env, mdbTxn);
     }
 
     public function readerCheck():Int {

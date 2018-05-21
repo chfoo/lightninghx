@@ -12,18 +12,18 @@ enum EnvironmentResourceState {
 }
 
 
-class Environment implements IEnvironment {
+class SafetyEnvironment implements Environment {
     static var openedPaths = new Map<String,Bool>();
 
     #if cpp
     static var globalLock = new cpp.vm.Mutex();
     #end
 
-    var innerEnvironment:IEnvironment;
+    var innerEnvironment:Environment;
     public var resourceState(default, null):EnvironmentResourceState = Created;
     var realPath:String;
 
-    public function new(innerEnvironment:IEnvironment) {
+    public function new(innerEnvironment:Environment) {
         this.innerEnvironment = innerEnvironment;
     }
 
@@ -148,10 +148,10 @@ class Environment implements IEnvironment {
         return innerEnvironment.getMaxKeySize();
     }
 
-    public function beginTransaction(?flags:Flags<EnvironmentFlags>):ITransaction {
+    public function beginTransaction(?flags:Flags<EnvironmentFlags>):Transaction {
         resourceState.requireState(Opened);
 
-        return new Transaction(
+        return new SafetyTransaction(
             this,
             innerEnvironment.beginTransaction(flags),
             flags.get(EnvironmentFlags.ReadOnly)

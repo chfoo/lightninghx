@@ -17,7 +17,7 @@ import haxe.io.Bytes;
     comparison functions.
 **/
 
-interface IDatabase {
+interface Database {
     /**
         Return new instance associated with the given transaction.
 
@@ -26,7 +26,7 @@ interface IDatabase {
 
         @param transaction Any other transaction.
     **/
-    function reuse(transaction:ITransaction):IDatabase;
+    function reuse(transaction:Transaction):Database;
 
     /**
         Return statistics about the database.
@@ -95,7 +95,7 @@ interface IDatabase {
     /**
         Open a new cursor.
     **/
-    function openCursor():ICursor;
+    function openCursor():Cursor;
 
     /**
         Return the ordering between two keys.

@@ -9,7 +9,7 @@ package lightninghx;
 
     `close()` must be called to release resources held by this instance.
 **/
-interface IEnvironment {
+interface Environment {
     /**
         Open the environment.
 
@@ -133,7 +133,7 @@ interface IEnvironment {
 
         @param flags Transaction options.
     **/
-    function beginTransaction(?flags:Flags<EnvironmentFlags>):ITransaction;
+    function beginTransaction(?flags:Flags<EnvironmentFlags>):Transaction;
 
     /**
         Clear stale entires in the reader lock table.

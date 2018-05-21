@@ -1,8 +1,8 @@
 package lightninghx.safety;
 
 import haxe.io.Bytes;
-import lightninghx.safety.Environment.EnvironmentResourceState as EnvResState;
-import lightninghx.safety.Transaction.TransactionResourceState as TxnResState;
+import lightninghx.safety.SafetyEnvironment.EnvironmentResourceState as EnvResState;
+import lightninghx.safety.SafetyTransaction.TransactionResourceState as TxnResState;
 
 using lightninghx.safety.SafetyTools;
 
@@ -13,14 +13,14 @@ enum DatabaseResourceState {
 }
 
 
-class Database implements IDatabase {
-    var environment:Environment;
-    var transaction:Transaction;
-    var innerDatabase:IDatabase;
+class SafetyDatabase implements Database {
+    var environment:SafetyEnvironment;
+    var transaction:SafetyTransaction;
+    var innerDatabase:Database;
     var resourceState:DatabaseResourceState = Opened;
 
-    public function new(environment:Environment, transaction:Transaction,
-            innerDatabase:IDatabase) {
+    public function new(environment:SafetyEnvironment,
+            transaction:SafetyTransaction, innerDatabase:Database) {
         this.environment = environment;
         this.transaction = transaction;
         this.innerDatabase = innerDatabase;
@@ -31,10 +31,10 @@ class Database implements IDatabase {
         transaction.resourceState.requireState(TxnResState.Opened);
     }
 
-    public function reuse(transaction:ITransaction):IDatabase {
-        var safetyTransaction = cast(transaction, Transaction);
+    public function reuse(transaction:Transaction):Database {
+        var safetyTransaction = cast(transaction, SafetyTransaction);
 
-        return new Database(
+        return new SafetyDatabase(
             environment,
             safetyTransaction,
             innerDatabase.reuse(safetyTransaction.innerTransaction)
@@ -92,10 +92,10 @@ class Database implements IDatabase {
         innerDatabase.delete(key, data);
     }
 
-    public function openCursor():ICursor {
+    public function openCursor():Cursor {
         requireEnvironmentAndTransaction();
 
-        return new Cursor(
+        return new SafetyCursor(
             environment,
             transaction,
             this,

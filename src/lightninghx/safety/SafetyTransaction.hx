@@ -1,6 +1,6 @@
 package lightninghx.safety;
 
-import lightninghx.safety.Environment.EnvironmentResourceState as EnvResState;
+import lightninghx.safety.SafetyEnvironment.EnvironmentResourceState as EnvResState;
 
 using lightninghx.safety.SafetyTools;
 
@@ -11,19 +11,19 @@ enum TransactionResourceState {
     Reset;
 }
 
-class Transaction implements ITransaction {
-    var environment:Environment;
+class SafetyTransaction implements Transaction {
+    var environment:SafetyEnvironment;
 
-    @:allow(lightninghx.safety.Cursor)
-    @:allow(lightninghx.safety.Database)
-    var innerTransaction:ITransaction;
+    @:allow(lightninghx.safety.SafetyCursor)
+    @:allow(lightninghx.safety.SafetyDatabase)
+    var innerTransaction:Transaction;
 
     public var resourceState(default, null):TransactionResourceState = Opened;
     public var isReadOnly(default, null):Bool;
     var autoClosingCursors:Array<Cursor>;
 
-    public function new(environment:Environment, innerTransaction:ITransaction,
-            isReadOnly:Bool) {
+    public function new(environment:SafetyEnvironment,
+            innerTransaction:Transaction, isReadOnly:Bool) {
         this.environment = environment;
         this.innerTransaction = innerTransaction;
         this.isReadOnly = isReadOnly;
@@ -33,7 +33,7 @@ class Transaction implements ITransaction {
         environment.resourceState.requireState(EnvResState.Opened);
     }
 
-    public function getEnvironment():IEnvironment {
+    public function getEnvironment():Environment {
         return environment;
     }
 
@@ -80,20 +80,20 @@ class Transaction implements ITransaction {
     }
 
 
-    public function openDatabase(?name:String, ?flags:Flags<DatabaseFlags>):IDatabase {
+    public function openDatabase(?name:String, ?flags:Flags<DatabaseFlags>):Database {
         requireEnvironment();
         resourceState.requireState(Opened);
 
-        return new Database(
+        return new SafetyDatabase(
             environment, this, innerTransaction.openDatabase(name, flags)
         );
     }
 
-    public function beginTransaction(?flags:Flags<EnvironmentFlags>):ITransaction {
+    public function beginTransaction(?flags:Flags<EnvironmentFlags>):Transaction {
         requireEnvironment();
         resourceState.requireState(Opened);
 
-        return new Transaction(
+        return new SafetyTransaction(
             environment,
             innerTransaction.beginTransaction(flags),
             flags.get(EnvironmentFlags.ReadOnly)

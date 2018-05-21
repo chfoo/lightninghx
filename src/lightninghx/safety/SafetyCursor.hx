@@ -1,9 +1,9 @@
 package lightninghx.safety;
 
 import haxe.io.Bytes;
-import lightninghx.ICursor.KeyDataPair;
-import lightninghx.safety.Environment.EnvironmentResourceState as EnvResState;
-import lightninghx.safety.Transaction.TransactionResourceState as TxnResState;
+import lightninghx.Cursor.KeyDataPair;
+import lightninghx.safety.SafetyEnvironment.EnvironmentResourceState as EnvResState;
+import lightninghx.safety.SafetyTransaction.TransactionResourceState as TxnResState;
 
 using lightninghx.safety.SafetyTools;
 
@@ -14,15 +14,16 @@ enum CursorResourceState {
 }
 
 
-class Cursor implements ICursor {
-    var environment:Environment;
-    var transaction:Transaction;
-    var database:Database;
-    var innerCursor:ICursor;
+class SafetyCursor implements Cursor {
+    var environment:SafetyEnvironment;
+    var transaction:SafetyTransaction;
+    var database:SafetyDatabase;
+    var innerCursor:Cursor;
     var resourceState:CursorResourceState = Opened;
 
-    public function new(environment:Environment, transaction:Transaction,
-            database:Database, innerCursor:ICursor) {
+    public function new(environment:SafetyEnvironment,
+            transaction:SafetyTransaction, database:SafetyDatabase,
+            innerCursor:Cursor) {
         this.environment = environment;
         this.transaction = transaction;
         this.database = database;
@@ -49,11 +50,11 @@ class Cursor implements ICursor {
         innerCursor.close();
     }
 
-    public function renew(transaction:ITransaction) {
+    public function renew(transaction:Transaction) {
         requireEnvironment();
         resourceState.requireState(Opened);
 
-        var safetyTransaction = cast(transaction, Transaction);
+        var safetyTransaction = cast(transaction, SafetyTransaction);
 
         this.transaction = safetyTransaction;
         innerCursor.renew(safetyTransaction.innerTransaction);
@@ -61,11 +62,11 @@ class Cursor implements ICursor {
         resourceState = Opened;
     }
 
-    public function getTransaction():ITransaction {
+    public function getTransaction():Transaction {
         return transaction;
     }
 
-    public function getDatabase():IDatabase {
+    public function getDatabase():Database {
         return database;
     }
 

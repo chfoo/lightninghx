@@ -10,10 +10,10 @@ class Lightning {
     /**
         Return a new environment.
     **/
-    public static function environment(safety:Bool = true):IEnvironment {
-        var envImpl:IEnvironment = null;
+    public static function environment(safety:Bool = true):Environment {
+        var envImpl:Environment = null;
         #if cpp
-        envImpl = lightninghx.cpp_.impl.Environment.create();
+        envImpl = lightninghx.cpp_.impl.CPPEnvironment.create();
         #elseif !(dont_compile_time_error)
         #error
         #end
@@ -23,7 +23,7 @@ class Lightning {
         }
 
         if (safety) {
-            return new lightninghx.safety.Environment(envImpl);
+            return new lightninghx.safety.SafetyEnvironment(envImpl);
         } else {
             return envImpl;
         }
