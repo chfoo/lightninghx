@@ -1,0 +1,9 @@
+-cp src/
+-xml out/xml/doc.xml
+-D doc-gen
+--macro include('lightninghx')
+--no-output
+-cpp out/cpp_dummy/
+
+--next
+-cmd haxelib run dox -i out/xml/ -o out/docs/ --include "lightninghx" --title "LightningHx API documentation"

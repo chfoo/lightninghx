@@ -177,6 +177,12 @@ Compiler flags
 By default, `Int64` is used for the map size type. This may overflow the native `size_t` parameter. You can force this library to use `Int` by specifying the `-D int32_size` flags.
 
 
+Docs
+----
+
+Automatically generated [API docs](https://chfoo.github.io/lightninghx/api/).
+
+
 Developing
 ----------
 
